@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const validEvent = ['push', 'pull_request'];
+const validEvent = ['push', 'pull_request', 'workflow_dispatch'];
 
 function getBranchName(eventName, payload) {
     let branchName;
@@ -11,6 +11,9 @@ function getBranchName(eventName, payload) {
             break;
         case 'pull_request':
             branchName = payload.pull_request.head.ref;
+            break;
+        case 'workflow_dispatch':
+            branchName = payload.ref;
             break;
         default:
             throw new Error(`Invalid event name: ${eventName}`);
