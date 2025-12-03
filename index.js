@@ -6,14 +6,11 @@ const validEvent = ['push', 'pull_request', 'workflow_dispatch'];
 function getBranchName(eventName, payload) {
     let branchName;
     switch (eventName) {
-        case 'push':
+        case 'push', 'workflow_dispatch':
             branchName = payload.ref.replace('refs/heads/', '');
             break;
         case 'pull_request':
             branchName = payload.pull_request.head.ref;
-            break;
-        case 'workflow_dispatch':
-            branchName = payload.ref;
             break;
         default:
             throw new Error(`Invalid event name: ${eventName}`);
